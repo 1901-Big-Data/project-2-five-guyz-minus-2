@@ -1,0 +1,30 @@
+<workflow-app name="oozie-tmdb" xmlns="uri:oozie:workflow:0.4">
+    <!-- Start job control node -->
+    <start to="sqoop-import" />
+    
+     <!-- Sqoop Import from flat file to MySQL Action Node -->
+    <action name="sqoop-import">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${job_tracker}</job-tracker>
+            <name-node>${name_node}</name-node>
+	    <prepare>
+        	<delete path="/user/cloudera/sqoop/tmdbtest"/>
+   	    </prepare>
+	    <job-xml>hive-site.xml</job-xml> 
+	    <command>import --connect jdbc:mysql://localhost/tmdb --username tmdb_admin --password ${password} --table tmdb_movies --hive-import --hive-table tmdb_oozie.tmdb_movies -m 1</command>
+        </sqoop>
+
+        <ok to="end" />
+        <error to="kill" />
+    </action>
+
+    <!-- Kill job control node -->
+    <kill name="kill">
+        <message>Oozie job terminated with errors.</message>
+    </kill>
+
+    <!-- End job control node -->
+    <end name="end" />
+
+
+    </workflow-app>
