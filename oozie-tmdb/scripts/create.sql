@@ -3,6 +3,7 @@ CREATE DATABASE IF NOT EXISTS tmdb_oozie;
 USE tmdb_oozie;
 
 DROP TABLE IF EXISTS tmdb_movies;
+DROP TABLE IF EXISTS tmdb_credits;
 
 create table tmdb_movies(
 budget bigint,
@@ -28,3 +29,11 @@ vote_count int)
 row format delimited
 fields terminated by '\001'
 collection items terminated by '\002';
+
+create table tmdb_credits(
+title varchar(255),
+moviecast array<struct<actorname: varchar(255), charactername: varchar(255), gender: int>>)
+row format delimited
+fields terminated by '\001'
+collection items terminated by '\002'
+map keys terminated by '\003';
