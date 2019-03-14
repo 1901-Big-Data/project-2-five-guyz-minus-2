@@ -1,7 +1,7 @@
 Contributors: Luke Davis, Jason Douglas, Anthony Nguyen
 
-Our project consists of finding a large set of raw data, transforming that data into a form applicable to Hive, 
-using Hive to perform business-relevant analysis, and finally visualize and present the findings to the group.
+Our project consisted of finding a large set of raw data, transforming and sqooping that data to Hive, 
+using Hive to perform business-relevant analysis, and then visualizing and presenting our findings to the group.
 
 The following is a more detailed step-by-step flow of our project:
   1. find an interesting dataset that is large and at least semi-structured
