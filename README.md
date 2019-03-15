@@ -19,4 +19,5 @@ Our chosen dataset: meta-data for ~5000 movies
 Source: https://www.kaggle.com/tmdb/tmdb-movie-metadata
 
 Posed Questions:
-1. Top 10 genres by popularity over time through the past 20 years
+1. Genre popularity trends since 1990: linear regression model and correlation coefficients
+2. Male vs female top billing popularity trends since 1990

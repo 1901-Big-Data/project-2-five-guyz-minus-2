@@ -4,7 +4,7 @@ USE fiveguyz_2db;
 
 DROP TABLE IF EXISTS the_big_one;
 
-create external table if not exists the_big_one (
+create table if not exists the_big_one (
     budget bigint, 
     web_homepage varchar(500), 
     movie_id int, 
@@ -27,26 +27,25 @@ create external table if not exists the_big_one (
     prod_countries array<string>)
 row format delimited
 fields terminated by ','
-collection items terminated by ','
-LOCATION '/user/cloudera/HData/HiveTables/project2';
+collection items terminated by ',';
 
 DROP TABLE IF EXISTS cast_alt;
 
-create external table if not exists cast_alt (
+create table if not exists cast_alt (
     index_id int, 
     movie_id int,
-    department varchar(200),
+	cast_id int,
+    name_char varchar(500),
     gender int, 
     person_id int,
-    job varchar(200),
-    name varchar(200))
+    name varchar(50),
+    order_of_cast int)
 row format delimited
-fields terminated by ','
-LOCATION '/user/cloudera/HData/HiveTables/project2';
+fields terminated by ',';
 
 DROP TABLE IF EXISTS crew_alt;
 
-create external table if not exists crew_alt (
+create table if not exists crew_alt (
     index_id int, 
     movie_id int,
     department varchar(200),
@@ -55,5 +54,13 @@ create external table if not exists crew_alt (
     job varchar(200),
     name varchar(200))
 row format delimited
-fields terminated by ','
-LOCATION '/user/cloudera/HData/HiveTables/project2';
+fields terminated by ',';
+
+DROP TABLE IF EXISTS genres;
+
+create table if not exists genres (
+    index_id int, 
+    movie_id int,
+    genres_name varchar(50))
+row format delimited
+fields terminated by ',';
