@@ -17,24 +17,57 @@
             <script>${scripts_location}/create.sql</script>
         </hive>
 
-        <ok to="hive-load-db" />
+        <ok to="sqoop-import-big" />
         <error to="kill" />
     </action>
 
-    <!-- Hive table loading -->
-    <action name="hive-load-db">
-        <hive xmlns="uri:oozie:hive-action:0.4">
+	    <!-- Sqoop Import from flat file to MySQL Action Node -->
+    <action name="sqoop-import-big">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
             <job-tracker>${job_tracker}</job-tracker>
             <name-node>${name_node}</name-node>
-            <!-- Set up connection to the actual Hive Metastore -->
-            <configuration>
-                <property>
-                    <name>hive.metastore.uris</name>
-                    <value>thrift://localhost:9083</value>
-                </property>
-            </configuration>
-            <script>${scripts_location}/load.sql</script>
-        </hive>
+	    <job-xml>hive-site.xml</job-xml>
+	    <command>import --connect jdbc:mysql://fiveguyz-2instance.ccvdgnrkv2zw.us-east-2.rds.amazonaws.com:3306/fiveguyz_2db --username luke --password ${password} --table the_big_one --hive-import --hive-table fiveguyz_2db.the_big_one -m 1</command>
+        </sqoop>
+
+        <ok to="sqoop-import-genres" />
+        <error to="kill" />
+    </action>
+	
+	    <!-- Sqoop Import from flat file to MySQL Action Node -->
+    <action name="sqoop-import-genres">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${job_tracker}</job-tracker>
+            <name-node>${name_node}</name-node>
+	    <job-xml>hive-site.xml</job-xml>
+	    <command>import --connect jdbc:mysql://fiveguyz-2instance.ccvdgnrkv2zw.us-east-2.rds.amazonaws.com:3306/fiveguyz_2db --username luke --password ${password} --table genres --hive-import --hive-table fiveguyz_2db.genres -m 1</command>
+        </sqoop>
+
+        <ok to="sqoop-import-crew" />
+        <error to="kill" />
+    </action>
+	
+	    <!-- Sqoop Import from flat file to MySQL Action Node -->
+    <action name="sqoop-import-crew">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${job_tracker}</job-tracker>
+            <name-node>${name_node}</name-node>
+	    <job-xml>hive-site.xml</job-xml>
+	    <command>import --connect jdbc:mysql://fiveguyz-2instance.ccvdgnrkv2zw.us-east-2.rds.amazonaws.com:3306/fiveguyz_2db --username luke --password ${password} --table crew_alt --hive-import --hive-table fiveguyz_2db.crew_alt -m 1</command>
+        </sqoop>
+
+        <ok to="sqoop-import-cast" />
+        <error to="kill" />
+    </action>
+	
+	    <!-- Sqoop Import from flat file to MySQL Action Node -->
+    <action name="sqoop-import-cast">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${job_tracker}</job-tracker>
+            <name-node>${name_node}</name-node>
+	    <job-xml>hive-site.xml</job-xml>
+	    <command>import --connect jdbc:mysql://fiveguyz-2instance.ccvdgnrkv2zw.us-east-2.rds.amazonaws.com:3306/fiveguyz_2db --username luke --password ${password} --table cast_alt --hive-import --hive-table fiveguyz_2db.cast_alt -m 1</command>
+        </sqoop>
 
         <ok to="hive-queries-output" />
         <error to="kill" />
@@ -54,7 +87,6 @@
             </configuration>
             <script>${scripts_location}/output_queries.sql</script>
         </hive>
-
         <ok to="end" />
         <error to="kill" />
     </action>

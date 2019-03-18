@@ -6,19 +6,19 @@ DROP TABLE IF EXISTS the_big_one;
 
 create table if not exists the_big_one (
     budget bigint, 
-    web_homepage varchar(500), 
+    web_homepage string, 
     movie_id int, 
-    orig_lang varchar(5), 
-    orig_title varchar(300), 
-    overview varchar(1500), 
+    orig_lang string, 
+    orig_title string, 
+    overview string, 
     popularity float, 
-    release_date date, 
+    release_date string, 
     revenue bigint, 
     runtime int, 
-    spoken_lang varchar(1000), 
-    status varchar(15), 
-    tagline varchar(1000), 
-    curr_title varchar(300), 
+    spoken_lang string, 
+    status string, 
+    tagline string, 
+    curr_title string, 
     vote_ave float, 
     vote_count int, 
     genres array<string>,
@@ -26,8 +26,8 @@ create table if not exists the_big_one (
     prod_companies array<string>, 
     prod_countries array<string>)
 row format delimited
-fields terminated by ','
-collection items terminated by ',';
+fields terminated by '\001'
+collection items terminated by '\012';
 
 DROP TABLE IF EXISTS cast_alt;
 
@@ -35,32 +35,32 @@ create table if not exists cast_alt (
     index_id int, 
     movie_id int,
 	cast_id int,
-    name_char varchar(500),
+    name_char string,
     gender int, 
     person_id int,
-    name varchar(50),
+    name string,
     order_of_cast int)
 row format delimited
-fields terminated by ',';
+fields terminated by '\001';
 
 DROP TABLE IF EXISTS crew_alt;
 
 create table if not exists crew_alt (
     index_id int, 
     movie_id int,
-    department varchar(200),
+    department string,
     gender int, 
     person_id int,
-    job varchar(200),
-    name varchar(200))
+    job string,
+    name string)
 row format delimited
-fields terminated by ',';
+fields terminated by '\001';
 
 DROP TABLE IF EXISTS genres;
 
 create table if not exists genres (
     index_id int, 
     movie_id int,
-    genres_name varchar(50))
+    genres_name string)
 row format delimited
-fields terminated by ',';
+fields terminated by '\001';
